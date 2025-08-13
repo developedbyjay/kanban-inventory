@@ -1,28 +1,16 @@
 import Link from "next/link";
 import GoogleSignIn from "./GoogleSignIn";
-import Image from "next/image";
 import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
+import { Header } from "./Header";
 
-export default function LoginFormInput() {
+export function LoginForm() {
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center gap-4 mb-6">
-        <Image
-          src="/icons/kanban-logo.svg"
-          alt="Kanban logo"
-          height="40"
-          width="40"
-          className="hidden md:block"
-        />
-        <div className="flex flex-col items-center gap-4 text-center">
-          <h1 className="text-2xl font-semibold text-gray-700">
-            Log in to your account
-          </h1>
-          <p className="text-gray-600">
-            Welcome back! Please enter your details.
-          </p>
-        </div>
-      </div>
+    <div className="max-w-md w-full p-6 bg-white rounded shadow-md">
+      <Header
+        text="Log in to your account"
+        subText="Welcome back! Please enter your details."
+      />
       <form className="flex flex-col gap-4">
         <Input
           label="Email"
@@ -57,14 +45,9 @@ export default function LoginFormInput() {
             </Link>
           </div>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-400"
-        >
-          Sign in
-        </button>
+        <Button>Sign in</Button>
       </form>
-      <GoogleSignIn />
+      <GoogleSignIn text="in" />
       <span className="text-sm text-gray-500 w-full text-center inline-block mt-4">
         Don't have an account?{" "}
         <Link href="/sign-up" className="text-blue-900 hover:underline">

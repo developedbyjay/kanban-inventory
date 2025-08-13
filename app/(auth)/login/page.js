@@ -1,5 +1,4 @@
-
-import LoginFormInput from "../../_components/auth/LoginFormInput";
+import { LoginForm } from "../../_components/auth/LoginForm";
 
 export const metadata = {
   title: "Login / Kanban Inventory",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function LoginPage() {
-  return <LoginFormInput />;
+  return <LoginForm />;
 }

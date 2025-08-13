@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function GoogleSignIn() {
+export default function GoogleSignIn({ text, type }) {
   return (
     <form className="mt-4">
       <button className="flex w-full items-center gap-6 text-sm justify-center border border-gray-300 px-10 py-2 font-medium">
@@ -10,7 +10,7 @@ export default function GoogleSignIn() {
           height="24"
           width="24"
         />
-        <span>Sign in with Google</span>
+        <span>Sign {text} with Google</span>
       </button>
     </form>
   );

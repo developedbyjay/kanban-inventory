@@ -1,6 +1,3 @@
-
-
-
 export function Input({ label, important, type, name, placeholder }) {
   return (
     <div className="space-y-2">
@@ -14,6 +11,7 @@ export function Input({ label, important, type, name, placeholder }) {
       )}
       <input
         type={type}
+        required={important}
         name={name}
         placeholder={placeholder}
         className="p-2 w-full border border-gray-300 rounded"
