@@ -14,22 +14,37 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SideBar() {
   const [toggleWidth, setToggleWidth] = useState(false);
 
   const hideElement = ` ${toggleWidth ? "hidden" : "inline"}`;
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 900) {
+        setToggleWidth(true);
+      } else {
+        setToggleWidth(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <aside
-      className={`relative h-full  transition-all ease-in-out duration-1000 bg-gray-50 text-gray-600 flex flex-col ${
+      className={`hidden md:flex relative h-full  transition-all duration-1000 ease-in bg-gray-50 text-gray-600  flex-col ${
         toggleWidth ? "w-auto" : "w-64"
       } `}
     >
       <button
         onClick={() => setToggleWidth(!toggleWidth)}
-        className="rounded-full p-1 border-1 absolute right-0 top-20 translate-x-3 w-5 h-5 flex items-center justify-center cursor-pointer"
+        className="rounded-full p-1 border-1 absolute right-0 top-20 translate-x-3 w-5 h-5 flex items-center justify-center cursor-pointer focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
       >
         {toggleWidth && <ChevronDoubleRightIcon className="w-4 h-4" />}
         {!toggleWidth && <ChevronDoubleLeftIcon className="w-4 h-4" />}
@@ -87,7 +102,11 @@ export function SideBar() {
           </li>
         </ul>
       </nav>
-      <div className="flex flex-col px-6 space-y-3">
+      <div
+        className={`flex flex-col px-6 space-y-3 ${
+          toggleWidth ? "items-center" : "items-stretch"
+        }`}
+      >
         <Link href="/settings" className="hover:bg-gray-300 py-2 px-3">
           <Cog8ToothIcon className="w-5 h-5 inline-block mr-2" />
           <span className={`${hideElement}`}>Settings</span>
