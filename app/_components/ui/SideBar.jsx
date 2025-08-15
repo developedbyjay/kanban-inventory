@@ -14,27 +14,47 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
+import { Tooltip } from "./Tooltip";
+
+const navItems = [
+  {
+    href: "/dashboard",
+    icon: <HomeIcon className="w-5 h-5" />,
+    label: "Dashboard",
+  },
+  {
+    href: "/inventory",
+    icon: <BuildingStorefrontIcon className="w-5 h-5" />,
+    label: "Inventory",
+  },
+  {
+    href: "/report",
+    icon: <ChartBarIcon className="w-5 h-5" />,
+    label: "Reports",
+  },
+  {
+    href: "/suppliers",
+    icon: <UserGroupIcon className="w-5 h-5" />,
+    label: "Suppliers",
+  },
+  {
+    href: "/customers",
+    icon: <ShoppingCartIcon className="w-5 h-5" />,
+    label: "Customers",
+  },
+  {
+    href: "/products",
+    icon: <CircleStackIcon className="w-5 h-5" />,
+    label: "Products",
+  },
+];
 
 export function SideBar() {
   const [toggleWidth, setToggleWidth] = useState(false);
 
   const hideElement = ` ${toggleWidth ? "hidden" : "inline"}`;
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 900) {
-        setToggleWidth(true);
-      } else {
-        setToggleWidth(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <aside
@@ -64,42 +84,19 @@ export function SideBar() {
             toggleWidth ? "items-center" : "items-stretch"
           }`}
         >
-          <li className="hover:bg-gray-300 px-3  py-2">
-            <Link href="/dashboard" className="">
-              <HomeIcon className="w-5 h-5 inline-block mr-2" />
-              <span className={`${hideElement}`}>Dashboard</span>
-            </Link>
-          </li>
-          <li className="hover:bg-gray-300  px-3 py-2">
-            <Link href="/inventory" className="">
-              <BuildingStorefrontIcon className="w-5 h-5 inline-block mr-2" />
-              <span className={`${hideElement}`}>Inventory</span>
-            </Link>
-          </li>
-          <li className="hover:bg-gray-300 px-3 py-2">
-            <Link href="/report" className="">
-              <ChartBarIcon className="w-5 h-5 inline-block mr-2" />
-              <span className={`${hideElement}`}>Reports</span>
-            </Link>
-          </li>
-          <li className="hover:bg-gray-300 px-3 py-2">
-            <Link href="/suppliers" className="">
-              <UserGroupIcon className="w-5 h-5 inline-block mr-2" />
-              <span className={`${hideElement}`}>Suppliers</span>
-            </Link>
-          </li>
-          <li className="hover:bg-gray-300 px-3 py-2">
-            <Link href="/orders" className="">
-              <ShoppingCartIcon className="w-5 h-5 inline-block mr-2" />
-              <span className={`${hideElement}`}>Orders</span>
-            </Link>
-          </li>
-          <li className="hover:bg-gray-300 px-3 py-2">
-            <Link href="/store" className="">
-              <CircleStackIcon className="w-5 h-5 inline-block mr-2 " />
-              <span className={`${hideElement}`}>Manage Store</span>
-            </Link>
-          </li>
+          {navItems.map((item) => (
+            <li
+              key={item.href}
+              className="hover:bg-gray-300 relative px-3 rounded-4xl flex items-center py-3"
+            >
+              <Tooltip text={item.label} showCondition={toggleWidth}>
+                <Link href={item.href} className="flex items-center gap-2">
+                  {item.icon}
+                  <span className={`${hideElement}`}>{item.label}</span>
+                </Link>
+              </Tooltip>
+            </li>
+          ))}
         </ul>
       </nav>
       <div
@@ -107,14 +104,24 @@ export function SideBar() {
           toggleWidth ? "items-center" : "items-stretch"
         }`}
       >
-        <Link href="/settings" className="hover:bg-gray-300 py-2 px-3">
-          <Cog8ToothIcon className="w-5 h-5 inline-block mr-2" />
-          <span className={`${hideElement}`}>Settings</span>
-        </Link>
-        <Link href="/logout" className="hover:bg-gray-300 py-2 px-3">
-          <ArrowLeftStartOnRectangleIcon className="w-5 h-5 inline-block mr-2" />
-          <span className={`${hideElement}`}>Logout</span>
-        </Link>
+        <Tooltip text="Settings" showCondition={toggleWidth}>
+          <Link
+            href="/settings"
+            className="hover:bg-gray-300 rounded-4xl flex items-center py-3 px-3 gap-2"
+          >
+            <Cog8ToothIcon className="w-5 h-5 " />
+            <span className={`${hideElement}`}>Settings</span>
+          </Link>
+        </Tooltip>
+        <Tooltip text="Logout" showCondition={toggleWidth}>
+          <Link
+            href="/logout"
+            className="hover:bg-gray-300  rounded-4xl flex items-center py-3 gap-2 px-3"
+          >
+            <ArrowLeftStartOnRectangleIcon className="w-5 h-5 " />
+            <span className={`${hideElement}`}>Logout</span>
+          </Link>
+        </Tooltip>
       </div>
     </aside>
   );
