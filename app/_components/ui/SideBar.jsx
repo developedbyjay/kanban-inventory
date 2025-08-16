@@ -60,20 +60,19 @@ export function SideBar() {
   const hideElement = ` ${toggleWidth && !expanded ? "hidden" : "block"}`;
 
   useEffect(() => {
-     const handleResize = () => {
-       if (window.innerWidth < 900) {
-         setToggleWidth(true);
-       } else {
-         setToggleWidth(false);
-       }
-     };
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && expanded) {
+        toggleNavigation();
+      }
+    };
 
-     window.addEventListener("resize", handleResize);
-     return () => {
-       window.removeEventListener("resize", handleResize);
-     };
-  },[])
+    handleResize();
 
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [expanded]);
 
   return (
     <aside
