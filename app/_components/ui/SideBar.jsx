@@ -59,6 +59,22 @@ export function SideBar() {
 
   const hideElement = ` ${toggleWidth && !expanded ? "hidden" : "block"}`;
 
+  useEffect(() => {
+     const handleResize = () => {
+       if (window.innerWidth < 900) {
+         setToggleWidth(true);
+       } else {
+         setToggleWidth(false);
+       }
+     };
+
+     window.addEventListener("resize", handleResize);
+     return () => {
+       window.removeEventListener("resize", handleResize);
+     };
+  },[])
+
+
   return (
     <aside
       className={` md:flex relative h-full  transition-all duration-1000 ease-in text-gray-600  flex-col ${
